@@ -1,4 +1,4 @@
-package br.ifes;
+package br.ifes.projetoDeSistemas.calc.application;
 
 /**
  * Hello world!
