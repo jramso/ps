@@ -3,12 +3,13 @@ package br.ifes.projetoDeSistemas.calc.view;
 import java.util.Scanner;
 
 import br.ifes.projetoDeSistemas.calc.dto.RequestDTO;
+import br.ifes.projetoDeSistemas.calc.dto.ResponseDTO;
 
 public class Menu {
 
-    public void show(){
+    public RequestDTO show(){
         this.showMenu();
-        //return this.captureValues();
+        return this.captureValues();
     }
 
     public void showMenu(){
@@ -21,7 +22,7 @@ public class Menu {
         System.out.println("5 - Sair do Programa");
     }
 
-    private void captureValues(){
+    private RequestDTO captureValues(){
         Scanner entrada = new Scanner(System.in);
         int opcao = entrada.nextInt();
         System.out.println("Informe o primeiro valor:");
@@ -29,7 +30,11 @@ public class Menu {
         System.out.println("Informe o segundo valor:");
         int valor2 = entrada.nextInt();
 
-        //return new RequestDTO(opcao,valor1,valor2);
+        return new RequestDTO(opcao,valor1,valor2);
+    }
+
+    public void showResult (ResponseDTO responseDTO){
+        System.out.println("O Resultado é: "+responseDTO.getResult());
     }
 
 }
