@@ -4,14 +4,14 @@ import br.ifes.projetoDeSistemas.calc.controller.ControllerCalc;
 import br.ifes.projetoDeSistemas.calc.dto.RequestDTO;
 import br.ifes.projetoDeSistemas.calc.dto.ResponseDTO;
 
-//import java.lang.reflect.Constructor;
+
 
 
 public class App 
 {
     public static void main(String[] args) {
         try {
-            // Instanciar dinamicamente a classe Menu sem importar diretamente
+            // Instanciar dinamicamente a classe Menu
             Class<?> menu = Class.forName("br.ifes.projetoDeSistemas.calc.view.Menu");
             Object menuInstance = menu.getDeclaredConstructor().newInstance();
 

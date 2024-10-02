@@ -11,6 +11,10 @@ public class RequestDTO {
         this.valor2 = valor2;
     }
 
+    public RequestDTO(int opcao){
+        this.opcao = opcao;
+    }
+
     public int getOpcao() {
         return opcao;
     }

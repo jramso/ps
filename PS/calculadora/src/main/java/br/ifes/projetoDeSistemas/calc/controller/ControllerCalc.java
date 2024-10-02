@@ -11,14 +11,9 @@ import br.ifes.projetoDeSistemas.calc.model.operation.Somar;
 import br.ifes.projetoDeSistemas.calc.model.operation.Subtrair;
 
 public class ControllerCalc {
-
     public ResponseDTO calc(RequestDTO requestDTO){
         int result = 0;
         ICalc calc = null;
-        if (requestDTO.getOpcao() < 4 && requestDTO.getOpcao() >0){
-            calc = new Calc();
-        }
-
 
         IOperation operation = null;
         switch (requestDTO.getOpcao()) {
@@ -34,12 +29,12 @@ public class ControllerCalc {
             case 4:
                 operation = new Dividir();
                 break;
-            case 5:
-                System.exit(result);
-                break;
+
             default:
                 throw new IllegalArgumentException("Opção de operação inválida" + requestDTO.getOpcao());
         }
+        
+        calc =  new Calc();
         result = calc.calculation(operation,requestDTO.getValor1(),requestDTO.getValor2());
         return new ResponseDTO(result);
 

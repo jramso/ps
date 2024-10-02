@@ -25,6 +25,9 @@ public class Menu {
     private RequestDTO captureValues(){
         Scanner entrada = new Scanner(System.in);
         int opcao = entrada.nextInt();
+        if (opcao == 5) {
+            System.exit(0);
+        }
         System.out.println("Informe o primeiro valor:");
         int valor1 = entrada.nextInt();
         System.out.println("Informe o segundo valor:");
