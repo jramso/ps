@@ -1,10 +1,7 @@
 package br.ifes.projetoDeSistemas.calc.application;
 
-import br.ifes.projetoDeSistemas.calc.controller.ControllerCalc;
 import br.ifes.projetoDeSistemas.calc.dto.RequestDTO;
 import br.ifes.projetoDeSistemas.calc.dto.ResponseDTO;
-
-
 
 
 public class App 
@@ -19,8 +16,12 @@ public class App
             RequestDTO requestDTO =(RequestDTO) menu.getMethod("show").invoke(menuInstance);
 
             // Processar a operação no controller
-            ControllerCalc controllerCalc = new ControllerCalc();
-            ResponseDTO responseDTO = controllerCalc.calc(requestDTO);            
+                // Instanciar dinamicamente a classe ControllerCalc
+            Class<?> controllerClass = Class.forName("br.ifes.projetoDeSistemas.calc.controller.ControllerCalc");
+            Object controllerInstance = controllerClass.getDeclaredConstructor().newInstance();
+
+            // Chamar o método 'calc' do ControllerCalc dinamicamente para obter ResponseDTO
+            ResponseDTO responseDTO = (ResponseDTO) controllerClass.getMethod("calc", RequestDTO.class).invoke(controllerInstance, requestDTO);
 
             // Chamar outro método dinamicamente
             // Aqui usamos o Reflection e não precisamos importar Menu diretamente
