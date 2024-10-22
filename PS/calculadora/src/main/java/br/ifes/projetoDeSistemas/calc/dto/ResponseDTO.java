@@ -1,7 +1,7 @@
 package br.ifes.projetoDeSistemas.calc.dto;
 
 public class ResponseDTO {
-
+    private int result = 0;
     public int getResult() {
         return result;
     }
@@ -10,7 +10,7 @@ public class ResponseDTO {
         this.result = result;
     }
 
-    private int result = 0;
+    
 
     public ResponseDTO(int result) {
         this.result = result;

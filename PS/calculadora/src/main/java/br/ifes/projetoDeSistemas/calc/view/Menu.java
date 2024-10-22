@@ -1,13 +1,16 @@
 package br.ifes.projetoDeSistemas.calc.view;
 
 import java.util.Scanner;
+import java.util.Set;
 
 import br.ifes.projetoDeSistemas.calc.dto.RequestDTO;
 import br.ifes.projetoDeSistemas.calc.dto.ResponseDTO;
+import br.ifes.projetoDeSistemas.calc.model.operation.IOperation;
+import org.reflections.Reflections;
 
 public class Menu {
 
-    public RequestDTO show(){
+    public RequestDTO showDTO(){
         this.showMenu();
         return this.captureValues();
     }
@@ -38,6 +41,36 @@ public class Menu {
 
     public void showResult (ResponseDTO responseDTO){
         System.out.println("O Resultado é: "+responseDTO.getResult());
+        System.out.print("\n");
+        showCalc();
+    }
+
+    public static void show(){
+        Reflections reflections = new Reflections("br.ifes.projetoDeSistemas.calc");
+
+        // Busca todas as classes que implementam a interface IOperation
+        Set<Class<? extends IOperation>> classes = reflections.getSubTypesOf(IOperation.class);
+
+        // Imprime o nome das classes que implementam a interface
+        for (Class<? extends IOperation> clazz : classes) {
+            System.out.println("Classe que implementa IOperation: " + clazz.getSimpleName());
+        }
+    }
+
+    public static void showCalc(){
+        try {
+            //brincando com reflection
+            Class<?> menu = Class.forName("br.ifes.projetoDeSistemas.calc.view.Menu");
+            Object menuInstance = menu.getDeclaredConstructor().newInstance();
+            RequestDTO requestDTO =(RequestDTO) menu.getMethod("showDTO").invoke(menuInstance);
+            Class<?> controllerClass = Class.forName("br.ifes.projetoDeSistemas.calc.controller.ControllerCalc");
+            Object controllerInstance = controllerClass.getDeclaredConstructor().newInstance();
+            ResponseDTO responseDTO = (ResponseDTO) controllerClass.getMethod("calc", RequestDTO.class).invoke(controllerInstance, requestDTO);
+            menu.getMethod("showResult", ResponseDTO.class).invoke(menuInstance, responseDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
