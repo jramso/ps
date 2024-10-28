@@ -7,22 +7,16 @@ import java.io.IOException;
 public class LabirintoModel {
     private int[][] labirinto;
     private boolean[][] visitado;
-    // {0, 1}: pra a direita.
-    // {1, 0}: pra baixo.
-    // {0, -1}: pra a esquerda.
-    // {-1, 0}: pra cima.
-    private final int[][] direcoes = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-    private boolean caminhoEncontrado = false;
-    private int tamanho;
+    private final int[][] direcoes = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // Direções: direita, baixo, esquerda, cima
 
+    // Carrega o labirinto a partir de um arquivo CSV
     public void carregarLabirinto(String arquivo) throws IOException {
-        // Primeiro passo: determinar o tamanho da matriz
         BufferedReader br = new BufferedReader(new FileReader(arquivo));
         String linha;
         int linhas = 0;
         int colunas = 0;
 
-        // Conta as linhas e colunas no arquivo
+        // Conta o tamanho da matriz lendo o arquivo
         while ((linha = br.readLine()) != null) {
             String[] valores = linha.split(",");
             colunas = valores.length;
@@ -30,12 +24,8 @@ public class LabirintoModel {
         }
         br.close();
 
-        // Inicializa as matrizes labirinto e visitado com o tamanho descoberto
-        this.tamanho = linhas;
-        this.labirinto = new int[linhas][colunas];
-        this.visitado = new boolean[linhas][colunas];
-
-        // Segundo passo: carrega o labirinto na matriz
+        // Inicializa o labirinto e a matriz de visitados
+        labirinto = new int[linhas][colunas];
         br = new BufferedReader(new FileReader(arquivo));
         int row = 0;
         while ((linha = br.readLine()) != null) {
@@ -46,33 +36,38 @@ public class LabirintoModel {
             row++;
         }
         br.close();
+
+        visitado = new boolean[linhas][colunas]; // Inicializa a matriz de células visitadas
     }
 
+    // Método recursivo para buscar o caminho até a saída
     public boolean buscarCaminho(int x, int y) {
-        if (x < 0 || y < 0 || x >= tamanho || y >= tamanho || labirinto[x][y] == 0 || visitado[x][y]) {
+        // Verifica limites e se a célula é válida para o caminho
+        if (x < 0 || y < 0 || x >= labirinto.length || y >= labirinto[0].length || labirinto[x][y] == 0 || visitado[x][y]) {
             return false;
         }
 
+        // Marca como visitado e parte do caminho
         visitado[x][y] = true;
-        labirinto[x][y] = 2; // Marca o caminho com "2"
+        labirinto[x][y] = 2; // Marca o caminho percorrido com o valor 2 (para a visualização)
 
-        if (x == tamanho - 1 && y == tamanho - 1) {
-            caminhoEncontrado = true;
+        // Se alcança a saída, termina a busca
+        if (x == labirinto.length - 1 && y == labirinto[0].length - 1) {
             return true;
         }
 
-        for (int[] d : direcoes) {
-            int novoX = x + d[0];
-            int novoY = y + d[1];
+        // Tenta mover-se nas direções: direita, baixo, esquerda, cima
+        for (int[] direcao : direcoes) {
+            int novoX = x + direcao[0];
+            int novoY = y + direcao[1];
             if (buscarCaminho(novoX, novoY)) {
                 return true;
             }
         }
 
-        if (!caminhoEncontrado) {
-            labirinto[x][y] = 1;
-        }
-
+        // Reseta a célula se não faz parte do caminho final
+        labirinto[x][y] = 1; // Retorna a célula ao valor original
+        visitado[x][y] = false;
         return false;
     }
 
@@ -80,5 +75,3 @@ public class LabirintoModel {
         return labirinto;
     }
 }
-
-
