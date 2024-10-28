@@ -5,7 +5,7 @@ Este projeto resolve labirintos representados por matrizes, onde os caminhos sã
 ## Estrutura de Diretórios
 
 A estrutura de diretórios do projeto é a seguinte:
-
+```
 labirinto/ 
 ├── pom.xml 
 └── src/ 
@@ -21,6 +21,8 @@ labirinto/
                         └── LabirintoModel.java 
                     └── view/ 
                         └── LabirintoView.java
+
+```
 
 
 - **application/Main.java**: Classe principal que inicializa o programa.
@@ -43,7 +45,7 @@ labirinto/
     mvn clean compile
 
    ```
-Resultados: Após carregar o arquivo, o programa tentará encontrar o caminho da entrada até a saída e exibir o caminho percorrido.
+3. Resultados: Após carregar o arquivo, o programa tentará encontrar o caminho da entrada até a saída e exibir o caminho percorrido.
     
    ```bash
 
