@@ -7,6 +7,10 @@ import java.io.IOException;
 public class LabirintoModel {
     private int[][] labirinto;
     private boolean[][] visitado;
+    // {0, 1}: pra a direita.
+    // {1, 0}: pra baixo.
+    // {0, -1}: pra a esquerda.
+    // {-1, 0}: pra cima.
     private final int[][] direcoes = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private boolean caminhoEncontrado = false;
     private int tamanho;
